@@ -18,6 +18,17 @@ __Note__ : The project will be made in progress and hence the versions made in b
   <img src= "https://user-images.githubusercontent.com/59146229/88170845-fbed6f80-cc3b-11ea-8a30-30251ee13dd0.png">
 </p>
 
+2. __Grid with Src and Dst__ 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59146229/88180027-5c83a900-cc4a-11ea-96c0-f60d40123a76.png">
+</p>
+
+3. __Grid visualizing Walls__ [😎💁🏻 Impressive work 👏🏻]
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59146229/88180088-758c5a00-cc4a-11ea-926a-da4246bfe06b.png">
+</p>
+
+
 
 ## Website : https://navigate-rover.herokuapp.com/
 - The changes will be shown on the corresponding link of the website.
