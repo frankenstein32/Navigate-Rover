@@ -21,8 +21,21 @@ function plot(rows = 50, cols = 50) {
   }
 
   /* This function is triggered whenever any box is clicked*/
-  function reply_click(obj) {
-    let id = obj.target.id;
+  let initiate_coloring_walls = false, switch_coloring_walls = false;
+  function activate(event){
+    initiate_coloring_walls = true;
+    switch_coloring_walls = !switch_coloring_walls;
+    reply_click(event);
+  }
+
+  function deactivate(){
+    initiate_coloring_walls = false;
+  }
+
+  function reply_click(event) {
+
+    if(!initiate_coloring_walls) return;
+    let id = event.target.id;
     let elem = document.getElementById(id);
     if (cnt == 0) {
       if (id === dst_crd) {
@@ -44,21 +57,26 @@ function plot(rows = 50, cols = 50) {
       dst_crd = id;
       isDst = true;
     } else {
-      if (elem.style.fill.length === 0) {
+      if (switch_coloring_walls && elem.style.fill.length === 0) {
         elem.style.fill = "rgb(128, 128, 128)";
       } else {
         if (elem.style.fill === "rgb(0, 255, 0)") {
           cnt = 0;
           isSrc = false;
           src_crd = "";
+          elem.style.fill = "";
         } else if (elem.style.fill === "rgb(255, 0, 0)") {
           cnt = 1;
           isDst = false;
           dst_crd = "";
+          elem.style.fill = "";
         } else if (elem.style.fill === "rgb(0, 0, 255)") {
           return;
         }
-        elem.style.fill = "";
+
+        if(!switch_coloring_walls){
+          elem.style.fill = "";
+        }
       }
     }
   }
