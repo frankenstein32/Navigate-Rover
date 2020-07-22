@@ -3,9 +3,11 @@ function plot(rows = 50, cols = 50) {
     for (let i = 0; i < rows; i++) {
       var x = 0;
       for (let j = 0; j < cols; j++) {
+
+        let colr = "rgb(255, 255, 255)";
         c += `<rect id=${
           i + ":" + j
-        } x="${x}" y="${y}" width="30" height="30" fill="rgb(255, 255, 255)" r="0" rx="0" ry="0"  stroke="#000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-opacity: 0.2;" stroke-opacity="0.2" ></rect>`;
+        } x="${x}" y="${y}" width="30" height="30" fill="${colr}" r="0" rx="0" ry="0"  stroke="#000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); stroke-opacity: 0.2;" stroke-opacity="0.2" ></rect>`;
         x += 30;
       }
       y += 30;
@@ -25,7 +27,7 @@ function plot(rows = 50, cols = 50) {
   let initiate_coloring_walls = false, switch_coloring_walls = false;
   function activate(event){
     initiate_coloring_walls = true;
-    if(document.getElementById(event.target.id).style.fill === "rgb(128, 128, 128)"){
+    if(document.getElementById(event.target.id).style.fill === "rgb(50, 50, 50)"){
       switch_coloring_walls = false;
     }else{
       switch_coloring_walls = true;
@@ -63,7 +65,7 @@ function plot(rows = 50, cols = 50) {
       isDst = true;
     } else {
       if (switch_coloring_walls && elem.style.fill.length === 0) {
-        elem.style.fill = "rgb(128, 128, 128)";
+        elem.style.fill = "rgb(50, 50, 50)";
       } else {
         if (elem.style.fill === "rgb(0, 255, 0)") {
           cnt = 0;
@@ -85,6 +87,18 @@ function plot(rows = 50, cols = 50) {
       }
     }
   }
+
+/*Side Panel onclick Listeners*/
+
+/* Set the width of the sidebar to 250px (show it) */
+function openNav() {
+  document.getElementById("mySidepanel").style.width = "250px";
+}
+
+/* Set the width of the sidebar to 0 (hide it) */
+function closeNav() {
+  document.getElementById("mySidepanel").style.width = "0";
+}
   
 let cnt = 2, isSrc = true, isDst = true;
 window.src_crd = "10:15";
