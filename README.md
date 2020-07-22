@@ -12,6 +12,12 @@ An introductory AI game web-app
 
 __Note__ : The project will be made in progress and hence the versions made in between will be uploaded too on the readme under the discarded versions section.
 
+### Features 
+1. Source and Destination positions are already plotted on grid
+2. Instead of clickable the grid is scrollable to select
+3. For now svg tags are used to plot the grid but will convert it with canvas
+
+
 ## Discarded Versions
 1. __Plain Grid__ 
 <p align="center">
