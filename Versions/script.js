@@ -13,6 +13,7 @@ function plot(rows = 50, cols = 50) {
     document.getElementById("container").innerHTML = c;
     document.getElementById(src_crd).style.fill = "rgb(0, 255, 0)";
     document.getElementById(dst_crd).style.fill = "rgb(255, 0, 0)";
+
   }
 
 
@@ -24,7 +25,11 @@ function plot(rows = 50, cols = 50) {
   let initiate_coloring_walls = false, switch_coloring_walls = false;
   function activate(event){
     initiate_coloring_walls = true;
-    switch_coloring_walls = !switch_coloring_walls;
+    if(document.getElementById(event.target.id).style.fill === "rgb(128, 128, 128)"){
+      switch_coloring_walls = false;
+    }else{
+      switch_coloring_walls = true;
+    }
     reply_click(event);
   }
 
