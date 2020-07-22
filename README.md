@@ -13,6 +13,10 @@ An introductory AI game web-app
 __Note__ : The project will be made in progress and hence the versions made in between will be uploaded too on the readme under the discarded versions section.
 
 ## Discarded Versions
+1. __Plain Grid__ 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59146229/88170845-fbed6f80-cc3b-11ea-8a30-30251ee13dd0.png">
+</p>
 
 
 ## Website : https://navigate-rover.herokuapp.com/
