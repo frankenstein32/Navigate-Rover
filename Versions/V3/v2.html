@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <title>Mars Rover</title>
+  </head>
+  <body>
+    <div id="mySidepanel" class="sidepanel">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" >&times;</a>
+      <a href="javascript:void(0)" class="space">Choose Algorithm</a>
+      <a href="javascript:void(0)" class="space">is Bidirectional?</a>
+      <a href="javascript:void(0)" class="space">Clear Walls</a>
+      <a href="javascript:void(0)" class="space">Clear Path</a>
+      <a href="javascript:void(0)" class="space">Start</a>
+    </div>
+    <button class="openbtn" onclick="openNav()">
+      &#9776;
+    </button>
+    <div style="color: #FFF; text-align: center; font-size: 100px; margin-top: 50px; border: 5px solid; border-color: white;"> 
+      Navigate The Mars Rover
+    </div>
+    <div id="grid" onmousedown="activate(event)" onmouseover="reply_click(event)" onmouseup="deactivate()">
+      <svg id="container" width="1920" height="1080"></svg>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
