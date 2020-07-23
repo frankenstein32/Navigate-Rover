@@ -1,1 +1,1 @@
-http-server . -p 5000
+node app.js
