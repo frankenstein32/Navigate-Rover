@@ -20,13 +20,40 @@
       <a href="javascript:void(0)" class="space">Start</a>
     </div>
     <button class="openbtn" onclick="openNav()">
-      &#9776;
+      Customize &#9776;
     </button>
-    <div style="color: #FFF; text-align: center; font-size: 100px; margin-top: 50px; border: 5px solid; border-color: white;"> 
-      Navigate The Mars Rover
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div style="color: #FFF; text-align: center; font-size: 80px; margin-top: 50px; border: 5px solid; border-color: white;"> 
+            Navigate The Mars Rover
+          </div>
+          <h3 style="color: white;">Wanna see Magic? :)</h3>
+        </div>
+        <div class="flip-card-back">
+          <h1>Instructions</h1>
+          <ul>
+          This Game is all about navigating the Mars Rover.
+          <li>1. Green box in th grid depicts the location of the Rover.</li>
+          <li>2. Red box depicts the destination station where you need to direct the Rover.</li>
+          <li>3. By clicking you can place the walls between the Rover and Destination station.</li>
+          <li>4. After that you can customize the way Rover will search the whole space grid like
+            whether search with Bi-Directionality <br>or with Diagonal Moves etc you will find in the
+            Custom Panel placed in left.</li>
+            <li> 5. After setting up the customs then you can hit the start button and the Rover will provide
+              you the shortest path between Rover <br> and Destination station.</li>
+            </ul>
+        </div>
+      </div>
     </div>
+    
     <div id="grid" onmousedown="activate(event)" onmouseover="reply_click(event)" onmouseup="deactivate()">
-      <svg id="container" width="1920" height="1080"></svg>
+      <svg id="container" width="1920" height="1080" style="padding: 0px; margin: 0px"></svg>
+    </div>
+    <div class="card">
+      <div class="container" style="height: 300px; border: 3px solid; border-color: white;">
+        <h2 style="color: white;">Score Card</h2>
+      </div>
     </div>
     <script src="./script.js"></script>
   </body>

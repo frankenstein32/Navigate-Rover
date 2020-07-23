@@ -1,11 +1,11 @@
 #grid {
-    padding-left: 0px;
-    margin: 0;
-    padding-top: 100px;
-    padding-bottom: 500px;
+    margin-bottom: 20px;
+    padding: 0px;
   }
   
   body {
+    padding: 0px;
+    margin: 0px;
     background-image: url('./images/back2.jpg');
   }
   /* The sidepanel menu */
@@ -16,10 +16,13 @@
     z-index: 1; /* Stay on top */
     top: 0;
     left: 0;
-    background-color: #111; /* Black*/
+    /* background-color: #111; Black */
+    background-image: url('./images/panel.jpg');
+    background-position: center;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
+    border-color: darkslategrey;
   }
   
   /* The sidepanel links */
@@ -27,14 +30,14 @@
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: #FFF;
     display: block;
-    transition: 0.3s;
+    transition: 0.5s;
   }
   
   /* When you mouse over the navigation links, change their color */
   .sidepanel a:hover {
-    color: #f1f1f1;
+    color: grey;
   }
   
   /* Position and style the close button (top right corner) */
@@ -66,4 +69,78 @@
     margin: 50px;
     text-align: center;
   }
-  
+
+  /* Flip Card Css */
+  /* The flip card container - set the width and height to whatever you want. */
+  /* I have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+
+.flip-card {
+  width: 70%;
+  height: 280px;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  margin-left: 250px;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 1.2s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+
+/* Style the back side */
+.flip-card-back {
+  color: white;
+  border: 6px solid;
+  transform: rotateY(180deg);
+  background-image: url('./images/banner1.jpg');
+}
+
+
+/* List Group Css */
+ul {
+  margin-top: 10px;
+  list-style-type: none; /* Remove bullets */
+  text-align: left;
+}
+
+ul li {
+  padding-top: 10px;
+  color: #ffffff;
+}
+
+/* Flash Card Css*/
+.card {
+  box-shadow: 0 4px 8px 0 rgba(255,255,255,0.2);
+  transition: 0.3s;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}

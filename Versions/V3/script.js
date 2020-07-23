@@ -3,7 +3,7 @@ function plot(rows = 36, cols = 64) {
     for (let i = 0; i < rows; i++) {
       var x = 0;
       for (let j = 0; j < cols; j++) {
-        let colr = "rgb(106, 106, 106)";
+        let colr = grid_color;
 
         if(i === 0 || j === 0 || i === rows - 1 || j === cols - 1){
           colr = border_color;
@@ -104,15 +104,20 @@ function plot(rows = 36, cols = 64) {
 /* Set the width of the sidebar to 250px (show it) */
 function openNav() {
   document.getElementById("mySidepanel").style.width = "350px";
+  document.getElementById("mySidepanel").style.border="5px solid";
+  document.getElementById("mySidepanel").style.borderColor="white";
 }
 
 /* Set the width of the sidebar to 0 (hide it) */
 function closeNav() {
   document.getElementById("mySidepanel").style.width = "0";
+  document.getElementById("mySidepanel").style.border="";
+  document.getElementById("mySidepanel").style.borderColor="";
 }
+
   
 let cnt = 2, isSrc = true, isDst = true;
-let walls_color = "rgb(0, 0, 0)", border_color="rgb(0, 16, 4)";
+let walls_color = "rgb(45, 45, 45)", border_color="rgb(0, 16, 4)", grid_color="rgb(105, 105, 105)";
 window.src_crd = "10:15";
 window.dst_crd = "10:30";
 window.rows = 36, window.cols = 50;
