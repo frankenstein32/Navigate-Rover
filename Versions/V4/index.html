@@ -9,11 +9,10 @@
   <title>Welcome</title>
   <style>
     body {
-      background-image: url("./images/back1.jpg");
+      background-image: url("./panel.jpg");
       background-position: center center;
       background-image: no-repeat;
     }
-
 
   </style>
 </head>
@@ -22,25 +21,20 @@
   <!--  Two Cols Division -->
   <div class="container-fluid">
     <div class="row">
-      <div class="col" style="height: 550px;">
+      <div class="col" style="height: 550px;;">
         <ul class="list-group mt-4 p-4 text-center font-weight-bold">
-          <li class="list-group-item mb-4" style="font-size: larger; background-color: lightblue;">
-            Welcome to the Game Navigate The Mars Rover!!!
+          <li class="list-group-item mb-4 bg-dark text-white" style="font-size: larger;">
+            Welcome to the Game - Navigate The Mars Rover!!!
           </li>
         </ul>
       </div>
     </div>
 
-
     <div class="row">
       <div class="col">
         <ul class="nav list-group mt-4 p-4 text-center">
-          <li class="list-group-item mb-4 " style="background-color: lightblue">
-            <form class="nav-link active font-weight-bold" action="./v4.html" method="GET">
-              <div class="form-group">
-                <label for="name" class="font-weight-bold">Username</label>
-                <input type="text" name="name" class="form-control" />
-              </div>
+          <li class="mb-4 " style="margin-top: 100px;">
+            <form class="list-group-item font-weight-bold" style="background-color: lightskyblue;" action="/grid" method="POST">
               <input type="submit" value="Start" class="btn btn-primary btn-block font-weight-bold" />
             </form>
           </li>
