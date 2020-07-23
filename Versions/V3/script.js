@@ -102,21 +102,31 @@ function plot(rows = 36, cols = 64) {
 /*Side Panel onclick Listeners*/
 
 /* Set the width of the sidebar to 250px (show it) */
-function openNav() {
-  document.getElementById("mySidepanel").style.width = "350px";
-  document.getElementById("mySidepanel").style.border="5px solid";
-  document.getElementById("mySidepanel").style.borderColor="white";
+function setAttributePanel(width, border, borderColor){
+  document.getElementById("mySidepanel").style.width = width;
+  document.getElementById("mySidepanel").style.border= border;
+  document.getElementById("mySidepanel").style.borderColor= borderColor;
 }
-
-/* Set the width of the sidebar to 0 (hide it) */
-function closeNav() {
-  document.getElementById("mySidepanel").style.width = "0";
-  document.getElementById("mySidepanel").style.border="";
-  document.getElementById("mySidepanel").style.borderColor="";
-}
-
+function triggerNav() {
   
-let cnt = 2, isSrc = true, isDst = true;
+  navopen = !navopen;
+  if(navopen){
+    setAttributePanel("350px", "5px solid", "white");
+  }else{
+    setAttributePanel("0px", "", "");
+  }
+}
+
+function flippCard(){
+  flipp = !flipp;
+  let temp = "rotateY(180deg)";
+  if(!flipp){
+    temp = "";
+  }
+  document.getElementById("front-card").style.transform = temp;
+}
+  
+let cnt = 2, isSrc = true, isDst = true, navopen = false, flipp = false;
 let walls_color = "rgb(45, 45, 45)", border_color="rgb(0, 16, 4)", grid_color="rgb(105, 105, 105)";
 window.src_crd = "10:15";
 window.dst_crd = "10:30";

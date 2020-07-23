@@ -17,8 +17,8 @@
     top: 0;
     left: 0;
     /* background-color: #111; Black */
-    background-image: url('./images/panel.jpg');
-    background-position: center;
+    background-image: url('./images/banner1.jpg');
+    background-position: top right;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
@@ -51,16 +51,21 @@
   
   /* Style the button that is used to open the sidepanel */
   .openbtn {
+    width: 100%;
     font-size: 20px;
+    padding: 20px;
     cursor: pointer;
-    background-color: #111;
+    background-color: rgb(0, 16, 4);
     color: white;
     padding: 10px 15px;
     border: none;
+    position: -webkit-sticky; 
+    position: sticky;
+    top: 0;
   }
   
   .openbtn:hover {
-    background-color: #444;
+    background-color: goldenrod;
   }
   
   /* Side panel elements padding */
@@ -91,11 +96,6 @@
   transform-style: preserve-3d;
 }
 
-/* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
 /* Position the front and back side */
 .flip-card-front, .flip-card-back {
   position: absolute;
@@ -104,8 +104,6 @@
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
 }
-
-/* Style the front side (fallback if image is missing) */
 
 /* Style the back side */
 .flip-card-back {
@@ -143,4 +141,27 @@ ul li {
 
 .container {
   padding: 2px 16px;
+}
+
+/* Start Button Css */
+.startdiv{
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 778px;
+  width: 100%; 
+  text-align: right;
+  border: none;
+}
+
+.startbutton{
+  width: 100%;
+  font-size: 20px;
+  padding: 10px 15px;
+  border: none;
+  background-color: rgb(0, 16, 4);
+  color: white;
+}
+
+.startbutton:hover{
+  background-color: rgb(0, 120, 0);
 }
