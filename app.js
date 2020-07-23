@@ -9,26 +9,26 @@ const server = http.createServer((req, res) => {
     
     let parsedUrl = url.parse(req.url, true);
     let path = parsedUrl.path.replace(/^\/+|\/+$/g, "");
-
+    console.log(`Path: ${path}`)
     if(req.method === 'GET'){
         if(path === ""){
-            path = "index.html";
+            path = "views/index.html";
         }else if(path === "script"){
             path = "script.js";
         }else if(path === 'style'){
             path = "style.css";
         }
     }else{
-        path += '.html'
+        path = 'views/grid.html'
         username = collectRequestData(req, result => {
             // console.log(result);
             // console.log(`Parsed data belonging to ${result.name}`);
             username = result.name;
         });
     }
-    // console.log(`Requested path: ${path}`);
+    console.log(`Requested path: ${path}`);
     let file = __dirname + '/Versions/V4/' + path;
-
+    console.log(`Requested File: ${file}`);
     fs.readFile(file, (error, content) => {
 
         if(error){
@@ -49,8 +49,8 @@ const server = http.createServer((req, res) => {
                 case "script.js":
                     res.writeHead(200, {'Content-Type':'application/javascript'});
                     break;
-                case "grid.html":
-                case "index.html":
+                case "views/grid.html":
+                case "views/index.html":
                     res.writeHead(200, {'Content-Type': 'text/html'})
             }
             res.end(content);

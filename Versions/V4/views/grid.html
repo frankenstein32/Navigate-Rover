@@ -4,16 +4,17 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link rel="stylesheet" type="text/css" href="../style.css" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
     <title>Mars Rover</title>
   </head>
   <body>
 
     <div id="mySidepanel" class="sidepanel">
       <a href="javascript:void(0)" class="space">Choose Algorithm</a>
-      <a href="javascript:void(0)" class="space">is Bidirectional?</a>
-      <a href="javascript:void(0)" class="space">Clear Walls</a>
-      <a href="javascript:void(0)" class="space">Clear Path</a>
+      <a href="javascript:void(0)" id="directions"  onclick="biDirection()" class="space">Single Directional</a>
+      <a href="javascript:void(0)" class="space" id="diagonalMoves" onclick="isDiagonal()"> Diagonal NA</a> 
+      <a href="javascript:void(0)" class="space" id="wall" onclick="clearPath(this)">Clear Walls</a>
+      <a href="javascript:void(0)" class="space"  id="path" onclick="clearPath(this)">Clear Path</a>
     </div>
     <button class="openbtn" onclick="triggerNav()">
       Customize &#9776;
@@ -47,9 +48,7 @@
       </div>
     </div>
     <div class="startdiv">
-      <button class="startbutton" >
-        Start
-      </button>
+      <button class="startbutton" id="start" onclick="Direct()"> Start </button>
     </div>
     <div id="grid" onmousedown="activate(event)" onmouseover="reply_click(event)" onmouseup="deactivate()">
       <svg id="container" width="1920" height="1080" style="padding: 0px; margin: 0px"></svg>
@@ -60,6 +59,6 @@
         <h2 style="color: white;">Score Card</h2>
       </div>
     </div>
-    <script src="../script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
