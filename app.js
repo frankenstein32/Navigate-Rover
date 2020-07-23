@@ -27,7 +27,7 @@ const server = http.createServer((req, res) => {
         });
     }
     // console.log(`Requested path: ${path}`);
-    let file = __dirname + '/V4/' + path;
+    let file = __dirname + '/Versions/V4/' + path;
 
     fs.readFile(file, (error, content) => {
 
