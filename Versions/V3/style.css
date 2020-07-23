@@ -62,6 +62,7 @@
     position: -webkit-sticky; 
     position: sticky;
     top: 0;
+    z-index: 9999;
   }
   
   .openbtn:hover {
@@ -111,6 +112,7 @@
   border: 6px solid;
   transform: rotateY(180deg);
   background-image: url('./images/banner1.jpg');
+  cursor: pointer;
 }
 
 
@@ -154,6 +156,7 @@ ul li {
 }
 
 .startbutton{
+  cursor: pointer;
   width: 100%;
   font-size: 20px;
   padding: 10px 15px;
