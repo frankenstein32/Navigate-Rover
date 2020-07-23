@@ -51,6 +51,32 @@ __Note__ : The project will be made in progress and hence the versions made in b
   <img src= "https://user-images.githubusercontent.com/59146229/88218181-4d6a1e80-cc7d-11ea-8556-46f26424b302.png">
 </p>
 
+### Version 2.0 [The Dark Version]
+1. __Top Panel: Flippable Card__
+#### Front Side 
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59146229/88259092-3d832680-ccdf-11ea-9701-1ad40b2436c2.png">
+</p>
+
+#### Back Side
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59146229/88259230-833fef00-ccdf-11ea-92b6-896f6916025a.png">
+</p>
+
+2. __Grid__
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59146229/88259332-acf91600-ccdf-11ea-9227-b30a7eb2b4ea.png">
+</p>
+
+3. __Side Panel__
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59146229/88259032-1e849480-ccdf-11ea-9a4e-f326244e4c9e.png">
+</p>
+
+3. __Footer: [Score Card]__
+<p align="center">
+  <img src= "https://user-images.githubusercontent.com/59146229/88259453-f6496580-ccdf-11ea-9af9-2effee39f5e7.png">
+</p>
 
 
 
