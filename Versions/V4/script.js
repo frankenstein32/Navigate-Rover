@@ -480,194 +480,421 @@ function flippCard(){
 
 /* -------------------------------------------- Algorithm ---- BFS ---------------------------------------------------------------*/
 
-/* Start the algorithm */
+/* 
+  * Purpose: This function is a helper function called to color the shortest path found by algorithm and marked the same in matrix.
+  * Called: This function is called by our BFS algorithm after finding the path from src to dst.
+  * Params: Res is a String containing the path from src to dst including src and dest location and hence it will look like this ->
+  *  for e.g. res = "12:34,12:35,12:36,12:37," [There will be an extra comma at the end and hence needs to be handled] 
+  */
+
 var printPath = function decodeFromRes(res) {
+
+  /* 
+    * Splitting the path stored in res by ','[comma] in order to get each location as an array of String 
+    * After splitting the array for above example will be like -> ['12:34', '12:35', '12:36', '12:37', ''] As you can see there exist
+    * an extra element at the end and at the starting exist the src location and at the second last element exist the destination 
+    * location.
+  */
   let arr = res.split(",");
-  // console.log(arr);
-  for (let i = 1; i < arr.length - 1; i++) {
+
+  /* 
+    * Loop for the array created after split and Do not forget to skip 0th and last 2 elements otherwise they will be coloured too
+    * Hence, src and dest locations will be coloured and user will not be able to src and dest again so ignore these indices.  
+  */
+  for (let i = 1; i <= arr.length - 2; i++) {
+
+    /* Now split the individual element of array with ':' [colon] to get row_number and col_number  */
     let temp = arr[i].split(":");
+
+    /* Convert row_number to number inorder to use it as row index of matrix */
     let nx = parseInt(temp[0]);
+
+    /* Convert col_number to number inorder to use it as col index of matrix */
     let ny = parseInt(temp[1]);
+
+    /* Update the matrix value to 9 to denote that the current rect is part of shortest path */
     matrix[nx][ny] = 9;
+
+    /* Update the color of shortest path to show the User there exist an Shortest Path */
     document.getElementById(`${nx}:${ny}`).style.fill = "rgb(0, 68, 137)";
   }
 };
 
+/*-------------------------------------------------------------------------------------------------------------------------------- */
+
+/*
+  * Purpose: This Function perfroms the BFS search from source to destination avoiding walls and borders
+  * Called: This function is called whenever the User wants to search with Single Directionality
+  * This is an basic BFS algorithm you might have studied everywhere in your course-work.
+  * Params: It accepts matrix containing the whole status of src, dst, walls, borders etc.
+*/
 function search(matrix) {
+
+  /* Before Starting You can Clear wall and path by youself if User forgot to clear the prev result */
   clearPath("wall");
   clearPath("path");
-  let queue = [];
-  let src_x = split(src_crd, 0),
-    src_y = split(src_crd, 1);
 
+  /* 
+    * Declare and initialize an Empty Queue to store the indices and path of each location while searching 
+    * Each element of queue will be an array of size - 3 which means with indices 0, 1 and 2.
+    * 0th element -> 'x' coordinate of the current cell
+    * 1st element -> 'y' coordinate of the current cell
+    * 2nd element -> 'path' stores the path till current cell starting from source cell.
+  */
+  let queue = [];
+
+  /* Extracting the 'x' and 'y' Coordinate of the source location */
+  let src_x = split(src_crd, 0), src_y = split(src_crd, 1);
+
+  /* Adding the first element in the queue with coordinate set to coordinate of src location and path containing source location */
   queue.push([src_x, src_y, `${src_x}:${src_y},`]);
+
+  /* A Set to mark the location as visited so that our algorithm will be saved from getting in an infinite loop */
   let visited = new Set();
 
-  while (queue.length != 0) {
-    let rp = queue.shift();
-    let x = parseInt(rp[0]);
-    let y = parseInt(rp[1]);
-    let path = rp[2];
+  /* 
+    * Some set of Operations will be done on the Queue till the Queue is Empty.
+    * 1. Extract the coordinates and path of the front element in the Queue.
+    * 2. check if the location with these coordinates is visited or not.
+        * 2.1 If visited then continue, no need to proceed further.
+        * 2.2 Otherwise Traverse the other neighbouring locations and check if these locations are valid or not.
+              * 2.2.1 If neighbouring location is valid then, color it and push_back in the queue to traverse it later.
+              * 2.2.2 Otherwise If locations is not valid then check the other neighbours.
+        * 2.3 If you got the destination location anywhere while performing the same operations.
+              * 2.3.1 If yes then send the path constructed to printPath function to print and color the shortest path.
+              * 2.3.2 Otherwise the path doesnot exist between src and dst, hence print No Path Exist and return.
+    * 3. END  
+  */
 
-    if (visited.has(`${x}:${y}`)) continue;
+  while (queue.length != 0) {
+
+    /* Remove the Front element from Queue and extract data from the element popped */
+    let rp = queue.shift();
+
+    /*  Exract the 'x' coordinate, 'y' coordinate and 'path' from the front element of the Queue */
+    let x = parseInt(rp[0]), y = parseInt(rp[1]), path = rp[2];
+
+    /* If the Location is already visited that means is present in the set that means do nothing */
+    if (visited.has(`${x}:${y}`)) continue; 
+
+    /* If the location is new then mark the current location as visited by adding in the set */
     visited.add(`${x}:${y}`);
 
-    // [[-1, 0], [1, 2]]
+    /* Now loop over all of the neighbours direction available to the cell */
     for (let i = 0; i < dirs.length; i++) {
-      let newX = x + parseInt(dirs[i][0]); // -1
-      let newY = y + parseInt(dirs[i][1]); // 0
 
+      /* 'newX' is the new 'x' coordinate constructed by adding either 0, -1 or +1 to the current x */
+      let newX = x + parseInt(dirs[i][0]); 
+
+      /* 'newY' is the new 'y' coordinate constructed by adding either 0, -1 or +1 to the current y */
+      let newY = y + parseInt(dirs[i][1]); 
+
+      /* If the current neighbour is out of bound or lies on border then still do nothing and continue */
       if (newX <= 0 || newX > rows - 2 || newY <= 0 || newY > cols - 2) {
         continue;
       }
       
+      /* If the locations is free from corner cases then check if the location must not be src and neither dst */
       if (matrix[newX][newY] != 1 && matrix[newX][newY] != 2) {
+
+        /* If Location is neither src nor destination then check if it wall or not. If yes then continue */
         if (matrix[newX][newY] === 3) {
           continue;
         }
+
+        /* Control here defines that this cell is neither src, nor destination and nor wall then color it as extra path */
         document.getElementById(`${newX}:${newY}`).style.fill = "rgb(149, 202, 255)";
-        matrix[newX][newY] = 7;
-      } else if (matrix[newX][newY] === 2) {
-        printPath(path + `${newX}:${newY}`);
-        return;
+        matrix[newX][newY] = 7; /* Mark the extra path in the matrix as '7' */
+      } else if (matrix[newX][newY] === 2) { /* If the location is Destination then search is finished */
+        printPath(path + `${newX}:${newY}`); /* Call the Print Path with Destination added separately */
+        return; /* Now no need to travere the aim is achieved and hence return */
       } else {
-        continue;
+        continue; /* Any other case then continue no need to advance further */
       }
+
+      /* If the neighbour is safe from borders and beyond that and not a wall then append it in the queue for future traversal */
       queue.push([newX, newY, path + `${newX}:${newY},`]);
     }
   }
 
+  /* If there exist no path from src to dst then Print the info */
   console.log("No Path Exists");
 }
 
+/* Purpose: This is an helper Function to call the main BFS algo named as search */
 function bfs() {
+
+  /* Calling search the main algo written to achieve the shortest path using BFS */
   search(matrix);
 }
 
-/* ---------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------------------- */
 
-/* --------------------------------Bi:BFS----------------------------------------------------- */
-/* Start the algorithm */
+/* ---------------------------------------------------------- Bi:BFS ------------------------------------------------------------- */
 
+/*                                                           Algorithm 
+  * The Main idea behind using Bi-BFS is to perform BFS from both locations src and dst.
+  * We will keep track of the parent of each vertex and parent refers to the location from which you have reached the current location.
+  * We have to maintain two queues and two parent storing data-structure to maintain data for both src path and dst path.
+  * If path of both src and dst intersects at anytime that means now we need to traverse back from this intersecting location for both
+  * of the location inorder to find path from intersection upto src and from intersection to destination.
+  * At last we will apppend the answer for both results and that will be our whole path.
+*/
+
+/* ------------------------------------------------------------------------------------------------------------------------------- */
+
+/* 
+  * Purpose: This is an helper Function which basically creates an array from an Object containing parent of each location.
+  * Params: Parent Object contains that for each location which is the parent of each location and parent here refers that
+  * from which location you reached which location. for e.g. for shortest path algo reached from coordinate 12:2 to 13:2 hence,
+  * for 13:2 parent is 12:2 so it can be visualized as parent = {"13:2" : "12:2"} [Demo purpose].
+  * p: parameter here defines the intersection point when both we perform BFS from both src and dst [Hence called Bi-BFS].
+*/
 function fillArray(parent, p, end) {
+
+  /* Creating an empty array to store the locations */
   let arr = [];
+
+  /* k variable here can be treated as temporary parent which is intersection location initially */
   let k = p;
-  while (k !== end) {
-    arr.push(parent[k]);
-    k = parent[k];
+
+  /* The whole loop works till we reach the end of the locations either [Src or Dest] */
+  while (k !== end) { /* If current temporary parent is not end then traverse next parent */
+    arr.push(parent[k]); /* Add the current parent in the array to store in the answer */
+    k = parent[k]; /* Update the current temporary parent with the parent of current location */
   }
+
+  /* Return the array created */
   return arr;
 }
 
+/* ------------------------------------------------------------------------------------------------------------------------------- */
+
+/* 
+  * Purpose: This function is an helper Function that starting from the Intersection of both src and dst generates the path.
+ */
 function printPathBi(p1, p2, k, src, dst) {
-  let arr1 = fillArray(p1, k, src).reverse();
-  let arr2 = fillArray(p2, k, dst);
-  arr1.push(k);
+
+  /* FillArray returns the path from intersecting location 'k' upto source and hence will be in reverseorder. */
+  let arr1 = fillArray(p1, k, src).reverse(); /* reversing explicitly to get the correct path. */
+
+  /* Fill Array returns the path from intersection location 'k' upto destination and hence will be straight */
+  let arr2 = fillArray(p2, k, dst); /* No need to reverse */
+
+  /* 
+    * Add the intersecting in the first array because:-
+      * arr1: contains the path from src to K [K is excluded].
+      * arr2: contains the path from k to dst [K is excluded].
+      * In order to get full path we need to do -> arr1 + K + arr2 [Full path from src to dst including intersection]
+   */
+  arr1.push(k); /* performing arr1 + K */
+
+  /* Performing arr1 + K + arr2 [As stated above] */
   let arr = arr1.concat(arr2);
+
+  /* 
+    * Loop for the array created after split and Do not forget to skip 0th and last 2 elements otherwise they will be coloured too
+    * Hence, src and dest locations will be coloured and user will not be able to src and dest again so ignore these indices.  
+  */
   for (let i = 1; i < arr.length - 1; i++) {
+
+    /* Now split the individual element of array with ':' [colon] to get row_number and col_number  */
     let temp = arr[i].split(":");
+
+     /* Convert row_number to number inorder to use it as row index of matrix */
     let nx = parseInt(temp[0]);
+
+    /* Convert col_number to number inorder to use it as col index of matrix */
     let ny = parseInt(temp[1]);
+
+     /* Update the matrix value to 9 to denote that the current rect is part of shortest path */
     matrix[nx][ny] = 9;
+
+     /* Update the color of shortest path to show the User there exist an Shortest Path */
     document.getElementById(`${nx}:${ny}`).style.fill = "rgb(0, 68, 137)";
   }
 }
 
+/* ------------------------------------------------------------------------------------------------------------------------------- */
+
+/* 
+  * Purpose: This is an helper function to perform BFS for individual Queue [queue for src as well as queue for dst] 
+  * Params: matrix is the main grid storing info, queue is the datastructure storing locations to traverse which can be of either 
+  * src or destination, parent refers to the Array of Object containing parent of each location [can be of src as well as dst].
+*/
 function bi_bfs(matrix, queue, visited, parent) {
+
+  /* Getting the front element from the queue */
   let rv = queue.shift();
-  let x = parseInt(rv[0]),
-    y = parseInt(rv[1]);
 
+  /* extract the 'x' and 'y' coordinate of the popped element */
+  let x = parseInt(rv[0]), y = parseInt(rv[1]);
+
+  /* Loop over each neighbour directions */
   for (let i = 0; i < dirs.length; i++) {
-    let newX = x + dirs[i][0],
-      newY = y + dirs[i][1];
 
-    if (
-      newX <= 0 ||
-      newY <= 0 ||
-      newX > rows - 2 ||
-      newY > cols - 2 ||
-      matrix[newX][newY] === 1 ||
-      matrix[newX][newY] === 2
-    ) {
+    /* 'newX' is the new 'x' coordinate constructed by adding either 0, -1 or +1 to the current x */
+    /* 'newY' is the new 'y' coordinate constructed by adding either 0, -1 or +1 to the current y */
+    let newX = x + dirs[i][0], newY = y + dirs[i][1];
+
+    /* If the neighour is invalid: border or beyond border or src or destination then no need to do anything continue */
+    if ( newX <= 0 || newY <= 0 || newX > rows - 2 || newY > cols - 2 || matrix[newX][newY] === 1 || matrix[newX][newY] === 2) {
       continue;
     }
 
+    /* If the neighbour location is not already visited and there exist no wall then it can be part of our path */
     if (!visited.has(`${newX}:${newY}`) && matrix[newX][newY] !== 3) {
+
+      /* save the parent of the neighbour coordinate to current coordinate */
       parent[`${newX}:${newY}`] = `${x}:${y}`;
+
+      /* Mark the neighbour coordinate as visited by adding it into set */
       visited.add(`${newX}:${newY}`);
-      document.getElementById(`${newX}:${newY}`).style.fill =
-        "rgb(149, 202, 255)";
-      // document.getElementById(`${newX}:${newY}`).style.transition = "1s";
+
+      /* Now get the element and update the color so that user can visualize progress */
+      document.getElementById(`${newX}:${newY}`).style.fill = "rgb(149, 202, 255)";
+
+      /* Mark the extra path as '7' to denote extra path in our matrix */
       matrix[newX][newY] = 7;
 
+      /* After checking the corner cases: Still the neighbour is save then append in the queue to traverse in future. */
       queue.push([newX, newY]);
     }
   }
 }
 
+/* ------------------------------------------------------------------------------------------------------------------------------- */
+
+/* Purpose: This is an helper function to check whether two sets contains anything in common or not. */
 function intersection(v1, v2) {
+
+  /* Loop over set 1 and extract each element. */
   for (const k of v1) {
+
+    /* If the same element exist in second set then return it because this element is the intersection. */
     if (v2.has(k)) {
-      return k;
+      return k; /* returning intersecting element. */
     }
   }
 
-  return -1;
+  return -1; /* return -1 if no intersection found. */
 }
 
+/* ------------------------------------------------------------------------------------------------------------------------------- */
+
+/* Purpose: This function act as a hub for the whole algorithm of Bi-BFS */
 function Bisearch(matrix) {
-  console.log(dirs);
-  let q1 = [],
-    q2 = [],
-    v1 = new Set(),
-    v2 = new Set(),
-    p1 = {},
-    p2 = {};
-  let src_x = split(src_crd, 0),
-    src_y = split(src_crd, 1),
-    dst_x = split(dst_crd, 0),
-    dst_y = split(dst_crd, 1);
 
-  q1.push([src_x, src_y]);
-  v1.add(`${src_x}:${src_y}`);
-  q2.push([dst_x, dst_y]);
-  v2.add(`${dst_x}:${dst_y},`);
+  /* Create two empty queues, Sets, Array of objects for src and dst both */
+  let q1 = [], q2 = [], v1 = new Set(), v2 = new Set(), p1 = {}, p2 = {};
 
+  /* Extract src 'x' and 'y' coordinate as well as for dst 'x' and 'y' coordinate */
+  let src_x = split(src_crd, 0), src_y = split(src_crd, 1), dst_x = split(dst_crd, 0), dst_y = split(dst_crd, 1);
+
+  /* Add the src location in q1 and mark it as visited and destination location in q2 and mark it as visited.  */
+  q1.push([src_x, src_y]); /* Add src location in q1 */
+  v1.add(`${src_x}:${src_y}`); /* Mark src location as visited */
+  q2.push([dst_x, dst_y]); /* Add dst location in q2 */
+  v2.add(`${dst_x}:${dst_y},`); /* Mark dst location as visited */
+
+  /* Mark the parent of src location as '-1' as no parent is there of src */
   p1[`${src_x}:${src_y}`] = -1;
+
+  /* Mark the parent of dst location as '-1' as no parent is there of dst */
   p2[`${dst_x}:${dst_y}`] = -1;
 
+  /* Loop over till both are non-empty */
   while (q1.length !== 0 && q2.length !== 0) {
+
+    /* Call bi_bfs helper function for q1, v1 and p1 */
     bi_bfs(matrix, q1, v1, p1);
+
+    /* Call bi_bfs helper function for q2, v2 and p2 */
     bi_bfs(matrix, q2, v2, p2);
 
+    /* Call the intersection helper function to find the intersection till now in their visited sets */
     let intr = intersection(v1, v2);
+
+    /* if Intersection is not -1 then surely path is present Otherwise algorithm will keep looking */
     if (intr !== -1) {
+
+      /* Calling helper function to print the path using parent of both path with given intersection location */
       printPathBi(p1, p2, intr, `${src_x}:${src_y}`, `${dst_x}:${dst_y}`);
-      return;
+      return; /* After printing return as no need to go further */
     }
   }
+
+  /* If no path exist then simply print and return */
   console.log("No path exists");
 }
 
+/* ------------------------------------------------------------------------------------------------------------------------------- */
+
+/* Purpose: This is an helper function to invoke the Bisearch function */
 function bibfs() {
   Bisearch(matrix);
 }
 
-/*-------------------------------------------------------------------------------------- */
+/*----------------------------------------------------- variables ---------------------------------------------------------------- */
 
-
-
-
-
- /* This function is triggered whenever any box is clicked*/
+/* 
+  * initiate_coloring_walls denotes to whether color any rect or not.[For detail see reply_click()]
+  * switch coloring_walls denotes to whether switch the coloring from creation of walls to removal 
+  * of walls or vice versa. [for detail see activate()]
+*/
 let initiate_coloring_walls = false, switch_coloring_walls = false;
+
+/* 
+  * cnt: [for detail see reply_click()]
+  * cnt = 0 -> It denotes we want to plot src.
+  * cnt = 1 -> It denotes we want to plot dst.
+  * cnt = anyvalue -> It denotes we want to either plot wall or remove src or remove dst.
+  * 
+  * isSrc: [for detail see reply_click()]
+  * It denotes whether src has already placed in grid or not.
+  * isDst: [for detail see reply_click()]
+  * It denotes wether dst has already placed in grid or not.
+  * 
+  * navopen: [for detail see triggerNav()] 
+  * It denotes whether we want to open the nav or close the nav.
+  * 
+  * flipp: [for detail see flippCard()]
+  * It denotes whether to flip the flash card or not.
+ */
+
 let cnt = 2, isSrc = true, isDst = true, navopen = false, flipp = false;
+
+/*
+  * walls_color: It denotes the walls color is to be painted.
+  * border_color: It denotes the border color is to be painted.
+  * grid_color: It denotes the grid rects color is to be painted.
+ */
 let walls_color = "rgb(45, 45, 45)", border_color="rgb(0, 16, 4)", grid_color="rgb(105, 105, 105)";
+
+/*
+  * window: This defines the global declaration and initialization of the variable [You can remove as whole code is in same file].
+  * src_crd: denotes the src coordinates [selected random for now].
+  * dst_crd: denotes the dst coordintates [selected random for now].
+  * rows: denotes the number of rows in grid.
+  * cols: denotes the number of cols in grid.
+ */
 window.src_crd = "10:15";
 window.dst_crd = "10:30";
 window.rows = 36, window.cols = 50;
+
+/*
+   * matrix: It stores the matrix created in Function createMatrix()
+   * isBirectional: It denotes the whether the algo is bi-directional or not [for detail see biDirection()]
+ */
+
 var matrix = createMatrix(), isBirectional = false;
+
+/*
+  * toggleDirs: denotes the directions list whether contain diagonal moves or not [for detail see isDiagonal()]
+  * dirs: It stores the without diagonal moves initially to initialize fdirs to this value.
+  * fdirs: It stores the non-diagonal moves initially but can be concated with diagonal moves. [for detail see isDiagonal()]
+  * dia: It stores the diagonal moves and hence it is used to append the fdirs with diagonal moves.
+ */
 var toggleDirs = false;
 var dirs = [
   [-1, 0],
@@ -688,6 +915,8 @@ const dia = [
   [1, -1],
   [1, 1],
 ];
+
+/* Plotting the grid without even waiting for any event to happen */
 plot();
  
  
