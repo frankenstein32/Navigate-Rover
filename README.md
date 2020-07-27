@@ -83,3 +83,10 @@ __Note__ : The project will be made in progress and hence the versions made in b
 ## Website : https://navigate-rover.herokuapp.com/
 - The changes will be shown on the corresponding link of the website.
 - The changes will be progressive, hence website will be ready after last commit.
+
+## Note:
+- If your application is unused for a while it gets unloaded (from the heroku server memory) .
+- On the first hit it gets loaded and stays loaded until some time passes without anyone accessing it.
+- This is done to save server resources. If no one uses your app why keep resources busy and not let someone who really needs use them ?
+- If your app has a lot of continous traffic it will never be unloaded.
+- __Hence at first this web-app might take some extra time to load but after that it will load faster__ 💁🏻🧐
