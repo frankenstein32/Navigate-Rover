@@ -226,7 +226,7 @@ function reply_click(event) {
       * If Destination is not placed then do cnt++ so that on next click Destination will be placed
     */
     if (!isDst) cnt++;
-    else cnt = 10;
+    else cnt = 56;
   } else if (cnt == 1) { /* If the cnt is '1' that means we are here to mark the desitnation on the grid. */
 
     /* If we want to place the Destination over Source then simply return as it is not permissible */
@@ -315,31 +315,21 @@ function clearPath(obj) {
       /* 
         * If val === 9 means we are called to clear path and this location contains '7' means this is an extra path only then remove  
         * Otherwise if we are called by clear wall button then we donot have to clear this extra path 
-      */
-      if (val === 9 && matrix[i][j] === 7) {
-        matrix[i][j] = 0; /* Marking the matrix as empty */
-        document.getElementById(`${i}:${j}`).style.fill = ""; /* Marking the color as default of this rect on grid */
-        continue; /* Every rect can have only one colour so no need to go further */
-      }
-      /* 
+        * 
         * If val === 9 means we are here to clear path and value at this location is 9 that means this rect is part of shortest path
         * denoted on the screen by the algorithm hence clear the location.
         * If not then we are here to clear walls then no need to clear this location 
-      */
-      if (val === 9 && matrix[i][j] === 9) { 
-        matrix[i][j] = 0; /* Mark this location as empty */
-        document.getElementById(`${i}:${j}`).style.fill = ""; /* Colour this location as default on the grid */
-      }
-
-      /* 
+        * 
         * After handling all corner cases: Not check whether the value at this location is wall or not.
         * If yes then unPaint the rect as we are surely called by the clear wall button as all possiblities of clear path we have seen
         * in above conditions
       */
-      if (matrix[i][j] === val) {
-        matrix[i][j] = 0; /* Mark this location as empty on the screen */
-        document.getElementById(`${i}:${j}`).style.fill = ""; /* Colour this location as default on the grid */
+      if ((val === 9 && (matrix[i][j] === 7 || matrix[i][j] === 9)) || (matrix[i][j] === val)) {
+        matrix[i][j] = 0; /* Marking the matrix as empty */
+        document.getElementById(`${i}:${j}`).style.fill = ""; /* Marking the color as default of this rect on grid */
+        continue; /* Every rect can have only one colour so no need to go further */
       }
+  
     }
   }
 }
@@ -584,10 +574,10 @@ function search(matrix) {
     for (let i = 0; i < dirs.length; i++) {
 
       /* 'newX' is the new 'x' coordinate constructed by adding either 0, -1 or +1 to the current x */
-      let newX = x + parseInt(dirs[i][0]); 
+      let newX = x + parseInt(dirs[i][0]); //-1
 
       /* 'newY' is the new 'y' coordinate constructed by adding either 0, -1 or +1 to the current y */
-      let newY = y + parseInt(dirs[i][1]); 
+      let newY = y + parseInt(dirs[i][1]); //0
 
       /* If the current neighbour is out of bound or lies on border then still do nothing and continue */
       if (newX <= 0 || newX > rows - 2 || newY <= 0 || newY > cols - 2) {
